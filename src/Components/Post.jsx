@@ -2,23 +2,15 @@ import { format, formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import styles from './Post.module.css';
 import { Comment } from './Comment';
+import { useState } from 'react';
 
 
 export function Post({ author, publishedAt, content }){
 
-    // Formatação da data
-    // const publishedDateFormatted = new Intl.DateTimeFormat('pt-BR', {
-    //     day: '2-digit',
-    //     month: 'long',
-    //     hour: '2-digit',
-    //     minute: '2-digit'
-    // }).format(publishedAt);
-    const comments =[
+    const [comments, setComments] = useState([
+        'Post muito cool'
+     ])
 
-        1,
-        2,
-        3
-    ];
     const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'",{
         locale: ptBR,
     })
@@ -26,6 +18,15 @@ export function Post({ author, publishedAt, content }){
         locale:ptBR,
         addSuffix: true,
     })
+
+    function handleCreateNewComment(){
+        event.preventDefault()
+
+        const newCommentText = event.target.comment.value
+
+        setComments([...comments, newCommentText]);
+        // console.log(comments);
+    }
     return (
         <article className={styles.post}>
             <header>
@@ -55,18 +56,19 @@ export function Post({ author, publishedAt, content }){
             <form className={styles.comentForm}>
                 <strong>Deixe o seu feedback</strong>
                 <textarea 
+                name="comment"
                 placeholder='Deixe o seu comentário'
                 />
 
                 <footer>
-                    <button type='submit'>Publicar</button>
+                    <button onClick={handleCreateNewComment} type='submit'>Publicar</button>
 
                 </footer>
             </form>
 
             <div className={styles.commentList}>
                 {comments.map(comment =>{
-                    return <Comment />
+                    return <Comment content={comment}/>
                 })}
             </div>
         </article>

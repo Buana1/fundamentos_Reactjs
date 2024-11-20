@@ -4,7 +4,7 @@ import styles from './Comment.module.css';
 import perfil from '../assets/profile.jpg';
 
 
-export function Comment(){
+export function Comment({ content }){
     return(
         <div className={styles.comment}>
             <img className={styles.avatar} src={perfil} />
@@ -21,7 +21,7 @@ export function Comment(){
                             <Trash size={24}/>
                         </button>
                     </header>
-                    <p>Muito bem Diana, parabéns!!!  🤚🤚🚀</p>
+                    <p>{content}</p>
                 </div>
 
                 <footer>
